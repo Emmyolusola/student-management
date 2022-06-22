@@ -1,14 +1,13 @@
-package com.example.demo.student;
+package com.example.demo.service;
 
+import com.example.demo.model.Student;
+import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,23 +51,32 @@ public class StudentService {
 
     @Transactional
     public void updateStudent(Long studentId, String studentName, String studentEmail) {
-        Optional<Student> optionalStudent = studentRepository.findById(studentId);
-        if (optionalStudent.isEmpty()){
-            throw new IllegalStateException("Student with id " + studentId + "does not exist");
-        }
-//        Student student = studentRepository.findById(studentId).orElseThrow(
-//                () -> new IllegalStateException("Student with id " + studentId + "does not exist"));
+//        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+//        if (optionalStudent.isEmpty()){
+//            throw new IllegalStateException("Student with id " + studentId + "does not exist");
+//        }
+        Student student = studentRepository.findById(studentId).orElseThrow(
+                () -> new IllegalStateException("Student with id " + studentId + "does not exist"));
 
-        Student student = new Student();
-        if (studentName != null && studentName.length() > 0 && !Objects.equals(student.getName(), studentName)){
-            student.setName(studentName);
-        }
-        if (studentEmail !=null && studentEmail.length() > 0 && !Objects.equals(student.getEmail(), studentEmail)){
-            Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
-            if (studentOptional.isPresent()){
-                throw new IllegalStateException("Email already taken");
-            }
-            student.setEmail(studentEmail);
-        }
+        System.out.println(studentId + "\n" + studentName + "\n" + studentEmail);
+        student.setName(studentName);
+        student.setEmail(studentEmail);
+//        Student student = studentRepository.getReferenceById(studentId);
+//        if (studentName != null && studentName.length() > 0 && !Objects.equals(student.getName(), studentName)){
+//            student.setName(studentName);
+//        }
+//        if (studentEmail !=null && studentEmail.length() > 0 && !Objects.equals(student.getEmail(), studentEmail)){
+//            Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+//            if (studentOptional.isPresent()){
+//                throw new IllegalStateException("Email already taken");
+//            }
+//            student.setEmail(studentEmail);
+//        }
+//        studentRepository.save(student);
+//        studentRepository.saveAndFlush(student);
+    }
+
+    public void deleteAllStudent() {
+        studentRepository.deleteAll();
     }
 }

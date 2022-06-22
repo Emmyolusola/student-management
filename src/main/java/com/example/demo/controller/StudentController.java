@@ -1,15 +1,15 @@
-package com.example.demo.student;
+package com.example.demo.controller;
 
+import com.example.demo.model.Student;
+import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.xpath.XPath;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/student")
+@RequestMapping(path = "api/v1/students")
 public class StudentController {
 
     private final StudentService studentService;
